@@ -1,0 +1,22 @@
+
+//On créé une variable d'environnement hadoop
+export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
+
+//On créé un répertoire InputRate
+hadoop fs -mkdir InputRate
+
+//On met les données dans ce répertoire
+hadoop fs -put data.csv InputRateTab
+
+//On compile le .java pour obtenir le .class
+hadoop com.sun.tools.javac.Main RateCount.java
+
+//On associe un .jar à notre .class
+jar cf rc.jar RateCount*.class
+
+//On lance l'éxécution du .jar sous hadoop avec un fichier d'entrée et un fichier de sortie
+hadoop jar rct.jar RateCountTab InputRateTab OutputRateTab
+
+//On lit le résultat dans le fichier de sortie
+hadoop fs -cat /Output/part-r-00000
+
